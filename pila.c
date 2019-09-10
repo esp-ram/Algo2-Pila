@@ -48,11 +48,10 @@ bool pila_apilar(pila_t *pila, void* valor){
         if (pila_auxiliar == NULL){
             return false;
         }
+        pila->datos = pila_auxiliar;
+        pila->capacidad *= 2;
     }
-    pila->datos = pila_auxiliar;
-    pila->capacidad *= 2;
-
-    pila->datos[cantidad] = valor;
+    pila->datos[pila->cantidad] = valor;
     pila->cantidad += 1;
 
 }
