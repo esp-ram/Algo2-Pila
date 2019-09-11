@@ -35,7 +35,7 @@ pila_t* pila_crear(void){
 
 
 bool pila_esta_vacia(const pila_t *pila){
-    if (pila->cantidad == 0{
+    if (pila->cantidad == 0){
         return true;
     }
     return false;
@@ -44,7 +44,7 @@ bool pila_esta_vacia(const pila_t *pila){
 
 bool pila_apilar(pila_t *pila, void* valor){
     if (pila->cantidad == pila->capacidad){
-        pila_t* pila_aumentada = realloc(pila->datos,pila->capacidad*2 * sizeof(double));
+        void* pila_aumentada = realloc(pila->datos,pila->capacidad*2 * sizeof(double));
         if (pila_aumentada == NULL){
             return false;
         }
@@ -53,7 +53,7 @@ bool pila_apilar(pila_t *pila, void* valor){
     }
     pila->datos[pila->cantidad] = valor;
     pila->cantidad += 1;
-
+    return true;
 }
 
 
@@ -74,15 +74,15 @@ void* pila_desapilar(pila_t *pila){
     if (pila_esta_vacia(pila)){
         return NULL;
     }
-    dato_desapilado = pila->datos[pila->cantidad - 1];
+    void* dato_desapilado = pila->datos[pila->cantidad - 1];
     pila->cantidad -= 1;
     if (pila->cantidad * 4 <= pila->capacidad){
-        pila_t* pila_reducida = realloc(pila->datos,pila->capacidad / 2 *sizeof(double));
+        void* pila_reducida = realloc(pila->datos,pila->capacidad / 2 *sizeof(double));
         if (pila_reducida != NULL){
-            pila->datos = pila_aumentada;
+            pila->datos = pila_reducida;
             pila->capacidad /= 2;
             return (dato_desapilado);
         }
     }
-    return(dato_desapilado);
+    return (dato_desapilado);
 }

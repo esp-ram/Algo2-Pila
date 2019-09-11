@@ -12,6 +12,7 @@ void pruebas_pila_alumno() {
     int a = 2;
     int b = 5;
     int c = 7;
+    int d = 9;
     printf("pruebas con pila vacia \n");
 
     print_test("desapilar pila vacia:",pila_desapilar(pi) == NULL);
@@ -19,15 +20,45 @@ void pruebas_pila_alumno() {
     print_test("ver si la pila esta vacia:",pila_esta_vacia(pi) == true);
     printf("se apilan varios valores\n");
     //apilar los tres elementos
-    print_test("se verifica el tope de la pila",*(int*)pila_ver_tope(pi) == 7);
-    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 7);
+    print_test("apilo elemento ",pila_apilar(pi,&a) != false);
+    print_test("apilo elemento ",pila_apilar(pi,&b) != false);
+    print_test("apilo elemento ",pila_apilar(pi,&c) != false);
+    print_test("apilo elemento ",pila_apilar(pi,&d) != false);
+    print_test("apilo elemento ",pila_apilar(pi,&a) != false);
+    print_test("se verifica el tope de la pila",*(int*)pila_ver_tope(pi) == 2);
+    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 2);
     print_test("verificacion si esta vacia",pila_esta_vacia(pi) == false);
     printf("desapillo toda la pila\n");
     //despilar toda la pila
+    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 9);
+    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 7);
+    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 5);
+    print_test("desapilo un elemento:",*(int*)pila_desapilar(pi) == 2);
+    printf("verificacion con la pila ya vacia\n");
     print_test("verificacion tope de pila",pila_ver_tope(pi) == NULL);
     print_test("intento desapilar la pila",pila_desapilar(pi) == NULL);
-    print_test("veo si esta vacia",pila_esta_vacia(pi) = true);
+    print_test("veo si esta vacia",pila_esta_vacia(pi) == true);
     //prueba con 1000 elementos
+    printf("apilo 1000 elementos\n");
+    int vector_prueba[1000];
+    for(int i=0; i < 1000; i++){
+        pila_apilar(pi,&vector_prueba[i]);
+    }
+    pila_apilar(pi,&a);
+    print_test("verificacion tope de pila ",*(int*)pila_ver_tope(pi) == 2);
+    printf("deapilando los 1000 elementos de la pila \n" );
+    /*
+    while(pila_esta_vacia(pi) != true){
+        pila_desapilar(pi);
+    }
+    */
+    for(int j = 999; i >= 0 ,j--){
+        pila_desapilar(pi) == vector_prueba[j];
+    }
+    printf("verificacion pila \n");
+    print_test("pila vacia? ",pila_ver_tope(pi) == NULL);
+    print_test("intento de desapilar pila vacia ",pila_desapilar(pi) == NULL);
+    pila_destruir(pi);
 
 }
 
@@ -141,7 +172,7 @@ void main(){
      pila_apilar(pi,&a);
    }
   }
-  
+
   printf("%d",*(int*)pila_desapilar(pi));
   printf("%d",*(int*)pila_desapilar(pi));
   printf("%d",*(int*)pila_ver_tope(pi));
