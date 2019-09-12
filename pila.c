@@ -21,7 +21,7 @@ pila_t* pila_crear(void){
     if (nueva == NULL) {
         return NULL;
     }
-    nueva->datos = malloc(TAM_INICIAL*sizeof(double));
+    nueva->datos = malloc(TAM_INICIAL* 8 );
 
     if (nueva->datos == NULL){
         free(nueva);
@@ -44,7 +44,7 @@ bool pila_esta_vacia(const pila_t *pila){
 
 bool pila_apilar(pila_t *pila, void* valor){
     if (pila->cantidad == pila->capacidad){
-        void* pila_aumentada = realloc(pila->datos,pila->capacidad*2 * sizeof(double));
+        void* pila_aumentada = realloc(pila->datos,pila->capacidad*2 * 8 );
         if (pila_aumentada == NULL){
             return false;
         }
@@ -77,7 +77,7 @@ void* pila_desapilar(pila_t *pila){
     void* dato_desapilado = pila->datos[pila->cantidad - 1];
     pila->cantidad -= 1;
     if (pila->cantidad * 4 <= pila->capacidad){
-        void* pila_reducida = realloc(pila->datos,pila->capacidad / 2 *sizeof(double));
+        void* pila_reducida = realloc(pila->datos,pila->capacidad / 2 * 8 );
         if (pila_reducida != NULL){
             pila->datos = pila_reducida;
             pila->capacidad /= 2;
