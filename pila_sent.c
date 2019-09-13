@@ -34,20 +34,6 @@ pila_t* pila_crear(void){
 }
 
 
-void* redimensionar (void* datos_redim , size_t tam){
-    void* redimencionado = realloc(datos_redim, tam * 8);
-    return redimencionado;
-}
-
-
-bool comprobacion_redim(void* nuevo){
-    if (nuevo == NULL){
-        return false;
-    }
-    return true;
-}
-
-
 bool pila_esta_vacia(const pila_t *pila){
     if (pila->cantidad == 0){
         return true;
@@ -56,9 +42,27 @@ bool pila_esta_vacia(const pila_t *pila){
 }
 
 
-void pila_destruir(pila_t *pila){
-    free(pila->datos);
-    free(pila);
+bool pila_apilar(pila_t *pila, void* valor){
+    if (pila->cantidad == pila->capacidad){
+        if(pila->capacidad == 0){
+            void* pila_nueva = malloc(TAM_INICIAL * 8);
+            if (pila_nueva == NULL){
+                return false;
+            }
+            pila->datos = pila_nueva;
+            pila->capacidad = TAM_INICIAL;
+        }else{
+            void* pila_aumentada = realloc(pila->datos,pila->capacidad*2 * 8 );
+                if (pila_aumentada == NULL){
+                    return false;
+                }
+            pila->datos = pila_aumentada;
+            pila->capacidad *= 2;
+        }
+    }
+    pila->datos[pila->cantidad] = valor;
+    pila->cantidad += 1;
+    return true;
 }
 
 
@@ -70,17 +74,24 @@ void* pila_ver_tope(const pila_t *pila){
 }
 
 
-bool pila_apilar(pila_t *pila, void* valor){
-    if (pila->cantidad == pila->capacidad){
-        void* pila_aumentada = redimensionar(pila->datos, pila->capacidad * 2);
-        if (comprobacion_redim(pila_aumentada) == false){
-            return false;
+void pila_destruir(pila_t *pila){
+    free(pila->datos);
+    free(pila);
+}
+
+
+void* redimensionar (void* datos_redim , size_t tam){
+    void* redimencionado = realloc(datos_redim, tam * 8);
+        if (redimencionado == NULL){
+            return datos_redim;
         }
-        pila->datos = pila_aumentada;
-        pila->capacidad *= 2;
-        }
-    pila->datos[pila->cantidad] = valor;
-    pila->cantidad += 1;
+    return redimencionado;
+}
+
+bool comprobacion_redim(void* nuevo){
+    if (nuevo == NULL){
+        return false;
+    }
     return true;
 }
 
@@ -92,11 +103,11 @@ void* pila_desapilar(pila_t *pila){
     void* dato_desapilado = pila->datos[pila->cantidad - 1];
     pila->cantidad -= 1;
     if ((pila->cantidad * 4 <= pila->capacidad) && (pila->capacidad > TAM_INICIAL)){
-        void* pila_reducida = redimensionar(pila->datos,pila->capacidad / 2);
-        if (comprobacion_redim(pila_reducida) == true){
+        void* pila_reducida = realloc(pila->datos,pila->capacidad / 2 * 8);
+        if (pila_reducida != NULL){
             pila->datos = pila_reducida;
             pila->capacidad /= 2;
-            return(dato_desapilado);
+            return (dato_desapilado);
         }
     }
     return (dato_desapilado);

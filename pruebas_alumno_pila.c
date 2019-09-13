@@ -67,6 +67,7 @@ void pruebas_pila_alumno() {
     print_test("despilando los elementos de la pila y verificando tope de pila",desapilar_grande(pi,vector_temporal) == true);
     print_test("pila vacia? ",pila_ver_tope(pi) == NULL);
     print_test("intento de desapilar pila vacia ",pila_desapilar(pi) == NULL);
+    printf("destruir pila con elementos\n");
+    pila_apilar(pi,&a);
     pila_destruir(pi);
-
 }
