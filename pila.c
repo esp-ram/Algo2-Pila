@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #define TAM_INICIAL 4
 #define FACTOR_REDIMENSION 2
+#define CONDICION_DISMINUCION 4
 
 
 /* Definición del struct pila proporcionado por la cátedra.
@@ -84,7 +85,7 @@ void* pila_desapilar(pila_t *pila){
     }
     void* dato_desapilado = pila->datos[pila->cantidad - 1];
     pila->cantidad -= 1;
-    if ((pila->cantidad * 4 <= pila->capacidad) && (pila->capacidad > TAM_INICIAL)){
+    if ((pila->cantidad * CONDICION_DISMINUCION <= pila->capacidad) && (pila->capacidad > TAM_INICIAL)){
         redimensionar(pila,pila->capacidad / FACTOR_REDIMENSION);
     }
     return (dato_desapilado);
